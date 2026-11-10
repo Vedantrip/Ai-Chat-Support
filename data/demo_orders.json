@@ -1,0 +1,16 @@
+[
+  {
+    "order_number": "TL-DEMO-1001",
+    "customer_email": "alex@example.test",
+    "status": "Shipped",
+    "items": ["Relaxed-fit graphic T-shirt, charcoal, size M"],
+    "tracking_note": "Fictional demo shipment; no real carrier or tracking link."
+  },
+  {
+    "order_number": "TL-DEMO-1002",
+    "customer_email": "sam@example.test",
+    "status": "Processing",
+    "items": ["Everyday hoodie, forest green, size L"],
+    "tracking_note": "Fictional demo order; no real carrier or tracking link."
+  }
+]

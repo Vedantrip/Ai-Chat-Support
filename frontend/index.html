@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>Threadlane Support — Local Demo</title>
+  <style>
+    :root{color-scheme:light;--ink:#22251f;--muted:#74786f;--line:#e6e7df;--paper:#fff;--canvas:#f6f5f1;--green:#244f3c;--mint:#eaf2eb;--coral:#e6a084;--shadow:0 22px 70px #343a2b12}
+    *{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+    button,textarea{font:inherit}.page{max-width:1160px;margin:auto;padding:26px 32px 34px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.brand{display:flex;align-items:center;gap:11px;color:inherit;text-decoration:none}.mark{width:40px;height:40px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-family:Georgia,serif;font-size:17px;letter-spacing:-1px}.brand-name{font-family:Georgia,serif;font-size:21px;line-height:1}.brand-sub{display:block;margin-top:4px;font:600 9px/1 system-ui;letter-spacing:1.6px;color:var(--muted)}.local-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);background:#fff;padding:9px 12px;border:1px solid var(--line);border-radius:999px}.dot{width:8px;height:8px;border-radius:50%;background:#8b9388}.dot.ready{background:#4d9a68;box-shadow:0 0 0 3px #4d9a681b}.dot.offline{background:#c3654e}
+    .notice[hidden]{display:none}.notice{display:flex;gap:10px;align-items:flex-start;border:1px solid #e9d8b4;background:#fbf6e8;color:#71592f;border-radius:14px;padding:12px 15px;font-size:12px;line-height:1.55;margin-bottom:19px}.notice strong{color:#59431d}.notice-icon{font-size:15px;line-height:1.3}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}.chat-card,.side-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}.chat-card{overflow:hidden}.chat-head{padding:22px 24px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.chat-heading{display:flex;align-items:center;gap:12px}.avatar{width:42px;height:42px;display:grid;place-items:center;background:var(--mint);border-radius:15px;font-size:20px}.chat-heading h1{font:500 21px/1.15 Georgia,serif;margin:0}.chat-heading p{margin:5px 0 0;color:var(--muted);font-size:12px}.new-chat{height:36px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--muted);font-size:12px;cursor:pointer}.new-chat:hover{background:#f7f8f5;color:var(--ink)}
+    .feed{height:min(55vh,490px);min-height:320px;overflow:auto;padding:22px 24px;display:flex;flex-direction:column;gap:15px;scroll-behavior:smooth}.message{max-width:min(83%,620px);display:flex;flex-direction:column;gap:6px;align-self:flex-start}.message.user{align-self:flex-end;align-items:flex-end}.bubble{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;font-size:13px;padding:12px 15px;border-radius:17px 17px 17px 5px;background:#f2f3ef;color:#30342e}.message.user .bubble{background:var(--green);color:white;border-radius:17px 17px 5px 17px}.meta{font-size:10px;color:#858a80;padding:0 4px}.sources{display:flex;gap:5px;flex-wrap:wrap}.source{border:1px solid var(--line);border-radius:99px;padding:4px 8px;font-size:10px;color:#53634f;background:#fbfcfa}.typing{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.typing span{width:6px;height:6px;border-radius:50%;background:#9aa398;animation:pulse 1s infinite alternate}.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}@keyframes pulse{to{opacity:.25;transform:translateY(-3px)}}
+    .compose{border-top:1px solid var(--line);padding:16px 20px 18px}.suggestions{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}.suggestion{border:1px solid var(--line);background:#fff;border-radius:99px;color:#60665c;font-size:11px;padding:7px 10px;cursor:pointer}.suggestion:hover{border-color:#b9cbbd;background:#f7faf6;color:var(--green)}.input-wrap{border:1px solid #dfe2da;border-radius:16px;padding:9px 10px 9px 14px;display:flex;gap:10px;align-items:flex-end;box-shadow:0 3px 12px #27312208}.input-wrap:focus-within{border-color:#96b29d;box-shadow:0 0 0 3px #e8f0e9}.input-wrap textarea{resize:none;flex:1;min-height:42px;max-height:120px;border:0;outline:0;background:transparent;color:var(--ink);padding:10px 0;font-size:13px;line-height:1.45}.input-wrap textarea::placeholder{color:#9a9e95}.send{width:40px;height:40px;border:0;border-radius:12px;background:var(--green);color:#fff;cursor:pointer;display:grid;place-items:center;transition:background .15s,transform .15s}.send:hover{background:#30684d;transform:translateY(-1px)}.send:disabled{opacity:.45;cursor:wait;transform:none}.send svg{width:17px;height:17px}.footnote{text-align:center;color:#92968e;font-size:10px;margin:10px 0 0}
+    .side-card{padding:21px 19px}.side-label{font-size:9px;letter-spacing:1.7px;color:#899084;font-weight:700;text-transform:uppercase}.side-title{font:500 19px/1.2 Georgia,serif;margin:9px 0 7px}.side-copy{color:var(--muted);font-size:12px;line-height:1.6;margin:0 0 17px}.order-example{padding:13px;border-radius:14px;background:#f7f8f5;border:1px solid #ebede7}.order-example h3{font-size:11px;margin:0 0 10px;color:#4e554b}.example-row{display:flex;justify-content:space-between;gap:8px;margin:7px 0;font-size:10px}.example-row span:first-child{color:#858a80}.example-row code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;color:#36483c}.copy-example{border:0;background:none;color:var(--green);padding:3px 0 0;font-size:10px;font-weight:600;cursor:pointer}.order-form{display:grid;gap:9px}.field-label{display:grid;gap:5px;color:#737a70;font-size:10px}.field-label input{height:37px;width:100%;padding:0 10px;border:1px solid #dfe2da;border-radius:9px;background:#fff;color:var(--ink);font:12px ui-monospace,SFMono-Regular,Consolas,monospace}.field-label input:focus{outline:2px solid #d9e8dc;border-color:#96b29d}.order-hint{margin:0;color:#858a80;font-size:10px;line-height:1.45}.lookup-button{height:37px;border:0;border-radius:10px;background:var(--green);color:#fff;font-size:11px;font-weight:600;cursor:pointer}.lookup-button:hover{background:#30684d}.side-divider{height:1px;background:var(--line);margin:17px 0}.privacy{display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:11px;line-height:1.55}.privacy span:first-child{font-size:14px}.bottom-note{text-align:center;color:#969a92;font-size:10px;margin-top:17px}
+    @media(max-width:800px){.page{padding:18px 16px 26px}.layout{grid-template-columns:1fr}.side-card{order:2}.feed{height:52vh;min-height:300px}.topbar{margin-bottom:16px}}
+    @media(max-width:460px){.page{padding:13px 10px 20px}.chat-card,.side-card{border-radius:18px}.chat-head{padding:17px 15px}.feed{padding:17px 14px}.compose{padding:13px 12px 14px}.message{max-width:92%}.local-status{font-size:10px;padding:8px 9px}.new-chat{font-size:11px;padding:0 9px}.notice[hidden]{display:none}.notice{font-size:11px}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Threadlane support home">
+        <span class="mark" aria-hidden="true">tl</span>
+        <span><span class="brand-name">threadlane</span><span class="brand-sub">CUSTOMER CARE</span></span>
+      </a>
+      <div class="local-status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusText">Connecting to local assistant…</span></div>
+    </header>
+    <div class="notice"><span class="notice-icon" aria-hidden="true">ⓘ</span><span><strong>Local demo store.</strong> Threadlane and the sample orders are fictional. This assistant is not connected to a real shop or customer account.</span></div>
+    <div class="notice" id="serverNotice" hidden><span class="notice-icon" aria-hidden="true">↗</span><span>This file preview cannot connect to the assistant. <a href="http://127.0.0.1:8000/">Open the working chat app at http://127.0.0.1:8000/</a></span></div>
+    <main class="layout">
+      <section class="chat-card" aria-label="Customer support chat">
+        <div class="chat-head">
+          <div class="chat-heading"><div class="avatar" aria-hidden="true">✳</div><div><h1>How can we help?</h1><p>Ask a question or look up a demo order</p></div></div>
+          <button class="new-chat" id="newChat" type="button">New conversation</button>
+        </div>
+        <div class="feed" id="feed" role="log" aria-live="polite" aria-relevant="additions">
+          <div class="message assistant"><div class="bubble">Hi there! I can answer questions from the support information provided, or look up one of our fictional demo orders. What can I help you with?</div><div class="meta">Threadlane assistant · local demo</div></div>
+        </div>
+        <form class="compose" id="chatForm">
+          <div class="suggestions" aria-label="Suggested messages">
+            <button class="suggestion" type="button" data-message="How do I check an order?">Check an order</button>
+            <button class="suggestion" type="button" data-message="What can you help me with?">What can you help with?</button>
+          </div>
+          <div class="input-wrap">
+            <textarea id="messageInput" rows="1" maxlength="2000" placeholder="Write your message…" aria-label="Your message" required></textarea>
+            <button class="send" id="sendButton" type="submit" aria-label="Send message" title="Send message"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12 20 4.5l-4.5 15-3.2-6.3L4.5 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m12.3 13.2 4.1-4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+          </div>
+          <p class="footnote">Messages are sent to the local assistant and aren’t saved when you start a new conversation.</p>
+        </form>
+      </section>
+      <aside class="side-card" aria-label="Demo order instructions">
+        <div class="side-label">A little help</div>
+        <h2 class="side-title">Checking an order</h2>
+        <p class="side-copy">For a demo lookup, share the order number and the email on that sample order. The assistant checks that both match before showing details.</p>
+        <div class="order-example">
+          <h3>Look up a demo order</h3>
+          <form class="order-form" id="orderLookupForm">
+            <label class="field-label" for="orderNumber">Order number<input id="orderNumber" name="orderNumber" type="text" placeholder="TL-DEMO-1001" autocomplete="off" required></label>
+            <label class="field-label" for="orderEmail">Email on the order<input id="orderEmail" name="orderEmail" type="email" placeholder="alex@example.test" autocomplete="off" required></label>
+            <p class="order-hint">Only the fictional sample orders shown here will match.</p>
+            <button class="lookup-button" type="submit">Check demo order</button>
+          </form>
+          <button class="copy-example" type="button" id="tryExample">Fill sample details</button>
+        </div>
+        <div class="side-divider"></div>
+        <div class="privacy"><span aria-hidden="true">◈</span><span>This prototype uses invented order records. It cannot access live order history, change an order, or issue a refund.</span></div>
+      </aside>
+    </main>
+    <footer class="bottom-note">A local prototype · No real store is connected</footer>
+  </div>
+  <script>
+    const feed = document.getElementById('feed');
+    const input = document.getElementById('messageInput');
+    const form = document.getElementById('chatForm');
+    const sendButton = document.getElementById('sendButton');
+    const orderForm = document.getElementById('orderLookupForm');
+    const isDirectFile = window.location.protocol === 'file:';
+    const history = [];
+    let busy = false;
+
+    function addMessage(role, content, details = {}) {
+      const row = document.createElement('div');
+      row.className = `message ${role}`;
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = content;
+      row.appendChild(bubble);
+      const labels = [];
+      if (details.action === 'lookup_order') labels.push('Demo order lookup');
+      if (details.sources?.length) labels.push(`From: ${details.sources.join(', ')}`);
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = role === 'user' ? 'You' : `Threadlane assistant · local demo${labels.length ? ` · ${labels.join(' · ')}` : ''}`;
+      row.appendChild(meta);
+      feed.appendChild(row);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function showTyping() {
+      const row = document.createElement('div');
+      row.className = 'message assistant';
+      row.id = 'typingIndicator';
+      row.innerHTML = '<div class="bubble typing" aria-label="Assistant is typing">Thinking <span></span><span></span><span></span></div>';
+      feed.appendChild(row);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    async function sendMessage(text) {
+      const message = text.trim();
+      if (isDirectFile) return;
+      if (!message || busy) return;
+      busy = true;
+      sendButton.disabled = true;
+      input.value = '';
+      input.style.height = 'auto';
+      addMessage('user', message);
+      showTyping();
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, history })
+        });
+        const data = await response.json();
+        document.getElementById('typingIndicator')?.remove();
+        if (!response.ok) throw new Error(data.detail || 'The assistant could not answer right now.');
+        const reply = data.reply || 'I could not prepare a reply. Please try again.';
+        history.push({ role: 'user', content: message }, { role: 'assistant', content: reply });
+        addMessage('assistant', reply, data);
+      } catch (error) {
+        document.getElementById('typingIndicator')?.remove();
+        addMessage('assistant', error.message || 'Could not reach the local assistant. Check that the API is running.');
+      } finally {
+        busy = false;
+        sendButton.disabled = false;
+        input.focus();
+      }
+    }
+
+    form.addEventListener('submit', event => { event.preventDefault(); sendMessage(input.value); });
+    input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 120)}px`; });
+    input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); form.requestSubmit(); } });
+    document.querySelectorAll('[data-message]').forEach(button => button.addEventListener('click', () => sendMessage(button.dataset.message)));
+    orderForm.addEventListener('submit', event => {
+      event.preventDefault();
+      const orderNumber = document.getElementById('orderNumber').value.trim();
+      const email = document.getElementById('orderEmail').value.trim();
+      sendMessage(`Please look up order ${orderNumber}. The email on the order is ${email}.`);
+    });
+    document.getElementById('tryExample').addEventListener('click', () => {
+      document.getElementById('orderNumber').value = 'TL-DEMO-1001';
+      document.getElementById('orderEmail').value = 'alex@example.test';
+      document.getElementById('orderEmail').focus();
+    });
+    document.getElementById('newChat').addEventListener('click', () => {
+      history.length = 0;
+      feed.innerHTML = '<div class="message assistant"><div class="bubble">Hi there! I can answer questions from the support information provided, or look up one of our fictional demo orders. What can I help you with?</div><div class="meta">Threadlane assistant · local demo</div></div>';
+      input.focus();
+    });
+    if (isDirectFile) {
+      document.getElementById('serverNotice').hidden = false;
+      document.getElementById('statusDot').classList.add('offline');
+      document.getElementById('statusText').textContent = 'Open the local app to chat';
+    } else {
+      fetch('/health').then(response => response.json()).then(data => {
+        const ready = data.status === 'ok';
+        document.getElementById('statusDot').classList.add(ready ? 'ready' : 'offline');
+        document.getElementById('statusText').textContent = ready ? 'Local assistant ready' : 'Assistant unavailable';
+      }).catch(() => {
+        document.getElementById('statusDot').classList.add('offline');
+        document.getElementById('statusText').textContent = 'Assistant unavailable';
+      });
+    }
+  </script>
+</body>
+</html>
