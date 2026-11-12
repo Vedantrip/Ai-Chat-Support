@@ -8,7 +8,7 @@
   <style>
     :root{color-scheme:light;--ink:#22251f;--muted:#74786f;--line:#e6e7df;--paper:#fff;--canvas:#f6f5f1;--green:#244f3c;--mint:#eaf2eb;--coral:#e6a084;--shadow:0 22px 70px #343a2b12}
     *{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
-    button,textarea{font:inherit}.page{max-width:1160px;margin:auto;padding:26px 32px 34px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.brand{display:flex;align-items:center;gap:11px;color:inherit;text-decoration:none}.mark{width:40px;height:40px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-family:Georgia,serif;font-size:17px;letter-spacing:-1px}.brand-name{font-family:Georgia,serif;font-size:21px;line-height:1}.brand-sub{display:block;margin-top:4px;font:600 9px/1 system-ui;letter-spacing:1.6px;color:var(--muted)}.local-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);background:#fff;padding:9px 12px;border:1px solid var(--line);border-radius:999px}.dot{width:8px;height:8px;border-radius:50%;background:#8b9388}.dot.ready{background:#4d9a68;box-shadow:0 0 0 3px #4d9a681b}.dot.offline{background:#c3654e}
+    button,textarea{font:inherit}.page{max-width:1160px;margin:auto;padding:26px 32px 34px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}.top-actions{display:flex;align-items:center;gap:9px}.owner-link{color:var(--green);font-size:11px;font-weight:600;text-decoration:none;padding:9px 11px;border:1px solid var(--line);border-radius:999px;background:#fff}.owner-link:hover{background:var(--mint)}.brand{display:flex;align-items:center;gap:11px;color:inherit;text-decoration:none}.mark{width:40px;height:40px;border-radius:14px;background:var(--green);color:white;display:grid;place-items:center;font-family:Georgia,serif;font-size:17px;letter-spacing:-1px}.brand-name{font-family:Georgia,serif;font-size:21px;line-height:1}.brand-sub{display:block;margin-top:4px;font:600 9px/1 system-ui;letter-spacing:1.6px;color:var(--muted)}.local-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);background:#fff;padding:9px 12px;border:1px solid var(--line);border-radius:999px}.dot{width:8px;height:8px;border-radius:50%;background:#8b9388}.dot.ready{background:#4d9a68;box-shadow:0 0 0 3px #4d9a681b}.dot.offline{background:#c3654e}
     .notice[hidden]{display:none}.notice{display:flex;gap:10px;align-items:flex-start;border:1px solid #e9d8b4;background:#fbf6e8;color:#71592f;border-radius:14px;padding:12px 15px;font-size:12px;line-height:1.55;margin-bottom:19px}.notice strong{color:#59431d}.notice-icon{font-size:15px;line-height:1.3}
     .layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}.chat-card,.side-card{background:var(--paper);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}.chat-card{overflow:hidden}.chat-head{padding:22px 24px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.chat-heading{display:flex;align-items:center;gap:12px}.avatar{width:42px;height:42px;display:grid;place-items:center;background:var(--mint);border-radius:15px;font-size:20px}.chat-heading h1{font:500 21px/1.15 Georgia,serif;margin:0}.chat-heading p{margin:5px 0 0;color:var(--muted);font-size:12px}.new-chat{height:36px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--muted);font-size:12px;cursor:pointer}.new-chat:hover{background:#f7f8f5;color:var(--ink)}
     .feed{height:min(55vh,490px);min-height:320px;overflow:auto;padding:22px 24px;display:flex;flex-direction:column;gap:15px;scroll-behavior:smooth}.message{max-width:min(83%,620px);display:flex;flex-direction:column;gap:6px;align-self:flex-start}.message.user{align-self:flex-end;align-items:flex-end}.bubble{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;font-size:13px;padding:12px 15px;border-radius:17px 17px 17px 5px;background:#f2f3ef;color:#30342e}.message.user .bubble{background:var(--green);color:white;border-radius:17px 17px 5px 17px}.meta{font-size:10px;color:#858a80;padding:0 4px}.sources{display:flex;gap:5px;flex-wrap:wrap}.source{border:1px solid var(--line);border-radius:99px;padding:4px 8px;font-size:10px;color:#53634f;background:#fbfcfa}.typing{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px}.typing span{width:6px;height:6px;border-radius:50%;background:#9aa398;animation:pulse 1s infinite alternate}.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}@keyframes pulse{to{opacity:.25;transform:translateY(-3px)}}
@@ -23,11 +23,11 @@
     <header class="topbar">
       <a class="brand" href="/" aria-label="Threadlane support home">
         <span class="mark" aria-hidden="true">tl</span>
-        <span><span class="brand-name">threadlane</span><span class="brand-sub">CUSTOMER CARE</span></span>
+        <span><span class="brand-name" id="brandName">Threadlane</span><span class="brand-sub">CUSTOMER CARE</span></span>
       </a>
-      <div class="local-status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusText">Connecting to local assistant…</span></div>
+      <div class="top-actions"><a class="owner-link" href="/owner">Owner setup</a><div class="local-status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusText">Connecting to local assistant…</span></div></div>
     </header>
-    <div class="notice"><span class="notice-icon" aria-hidden="true">ⓘ</span><span><strong>Local demo store.</strong> Threadlane and the sample orders are fictional. This assistant is not connected to a real shop or customer account.</span></div>
+    <div class="notice"><span class="notice-icon" aria-hidden="true">ⓘ</span><span><strong>Local demo store.</strong> Sample orders are fictional. This assistant is not connected to a real shop or customer account.</span></div>
     <div class="notice" id="serverNotice" hidden><span class="notice-icon" aria-hidden="true">↗</span><span>This file preview cannot connect to the assistant. <a href="http://127.0.0.1:8000/">Open the working chat app at http://127.0.0.1:8000/</a></span></div>
     <main class="layout">
       <section class="chat-card" aria-label="Customer support chat">
@@ -36,7 +36,7 @@
           <button class="new-chat" id="newChat" type="button">New conversation</button>
         </div>
         <div class="feed" id="feed" role="log" aria-live="polite" aria-relevant="additions">
-          <div class="message assistant"><div class="bubble">Hi there! I can answer questions from the support information provided, or look up one of our fictional demo orders. What can I help you with?</div><div class="meta">Threadlane assistant · local demo</div></div>
+          <div class="message assistant"><div class="bubble">Hi there! I can answer questions from the support information provided, or look up one of our fictional demo orders. What can I help you with?</div><div class="meta" id="initialAssistantMeta">Threadlane assistant · local demo</div></div>
         </div>
         <form class="compose" id="chatForm">
           <div class="suggestions" aria-label="Suggested messages">
@@ -57,12 +57,12 @@
         <div class="order-example">
           <h3>Look up a demo order</h3>
           <form class="order-form" id="orderLookupForm">
-            <label class="field-label" for="orderNumber">Order number<input id="orderNumber" name="orderNumber" type="text" placeholder="TL-DEMO-1001" autocomplete="off" required></label>
-            <label class="field-label" for="orderEmail">Email on the order<input id="orderEmail" name="orderEmail" type="email" placeholder="alex@example.test" autocomplete="off" required></label>
-            <p class="order-hint">Only the fictional sample orders shown here will match.</p>
-            <button class="lookup-button" type="submit">Check demo order</button>
+            <label class="field-label" for="orderNumber">Order number<input id="orderNumber" name="orderNumber" type="text" disabled placeholder="TL-DEMO-1001" autocomplete="off" required></label>
+            <label class="field-label" for="orderEmail">Email on the order<input id="orderEmail" name="orderEmail" type="email" disabled placeholder="alex@example.test" autocomplete="off" required></label>
+            <p class="order-hint" id="orderLookupNotice">Only the fictional sample orders shown here will match.</p>
+            <button class="lookup-button" type="submit" disabled>Check demo order</button>
           </form>
-          <button class="copy-example" type="button" id="tryExample">Fill sample details</button>
+          <button class="copy-example" type="button" id="tryExample" disabled>Fill sample details</button>
         </div>
         <div class="side-divider"></div>
         <div class="privacy"><span aria-hidden="true">◈</span><span>This prototype uses invented order records. It cannot access live order history, change an order, or issue a refund.</span></div>
@@ -77,6 +77,7 @@
     const sendButton = document.getElementById('sendButton');
     const orderForm = document.getElementById('orderLookupForm');
     const isDirectFile = window.location.protocol === 'file:';
+    let brandName = 'Threadlane';
     const history = [];
     let busy = false;
 
@@ -92,7 +93,7 @@
       if (details.sources?.length) labels.push(`From: ${details.sources.join(', ')}`);
       const meta = document.createElement('div');
       meta.className = 'meta';
-      meta.textContent = role === 'user' ? 'You' : `Threadlane assistant · local demo${labels.length ? ` · ${labels.join(' · ')}` : ''}`;
+      meta.textContent = role === 'user' ? 'You' : `${brandName} assistant · local demo${labels.length ? ` · ${labels.join(' · ')}` : ''}`;
       row.appendChild(meta);
       feed.appendChild(row);
       feed.scrollTop = feed.scrollHeight;
@@ -156,14 +157,28 @@
     });
     document.getElementById('newChat').addEventListener('click', () => {
       history.length = 0;
-      feed.innerHTML = '<div class="message assistant"><div class="bubble">Hi there! I can answer questions from the support information provided, or look up one of our fictional demo orders. What can I help you with?</div><div class="meta">Threadlane assistant · local demo</div></div>';
+      feed.innerHTML = '<div class="message assistant"><div class="bubble">Hi there! I can answer questions from the support information provided, or look up one of our fictional demo orders. What can I help you with?</div><div class="meta" id="initialAssistantMeta">Threadlane assistant · local demo</div></div>';
+      document.getElementById('initialAssistantMeta').textContent = `${brandName} assistant · local demo`;
       input.focus();
     });
+    function applyBusinessSettings(data) {
+      brandName = data.brand_name || 'Threadlane';
+      document.getElementById('brandName').textContent = brandName;
+      document.getElementById('initialAssistantMeta').textContent = `${brandName} assistant · local demo`;
+      document.title = `${brandName} Support — Local Demo`;
+      const initials = brandName.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('');
+      document.querySelector('.mark').textContent = initials || 'TL';
+      const enabled = Boolean(data.order_lookup_enabled);
+      orderForm.querySelectorAll('input, button').forEach(control => { control.disabled = !enabled; });
+      document.getElementById('orderLookupNotice').textContent = enabled
+        ? 'Only the fictional sample orders shown here will match.' : 'Order lookup is turned off in owner settings.';
+    }
     if (isDirectFile) {
       document.getElementById('serverNotice').hidden = false;
       document.getElementById('statusDot').classList.add('offline');
       document.getElementById('statusText').textContent = 'Open the local app to chat';
     } else {
+      fetch('/api/business-settings').then(response => response.json()).then(data => applyBusinessSettings(data)).catch(() => {});
       fetch('/health').then(response => response.json()).then(data => {
         const ready = data.status === 'ok';
         document.getElementById('statusDot').classList.add(ready ? 'ready' : 'offline');

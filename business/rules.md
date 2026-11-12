@@ -11,4 +11,4 @@ Threadlane is a placeholder clothing brand created for this local prototype. It 
 - `data/demo_orders.json` contains fabricated records using reserved `.test` email addresses. Do not replace these with real customer data until access controls and a real store integration are designed.
 - No real store, order system, shipping carrier, return policy, or refund policy is connected or defined.
 - The assistant must identify lookup results as demo data and must not invent business policies.
-- Add real FAQs and policies to `knowledge/faq.md` only after confirming the business's actual rules.
+- Add actual FAQs and policies through `/owner` only after confirming the business's rules. They are stored under `%LOCALAPPDATA%\\ThreadlaneSupport\\business_settings.json`, outside the project repository.

@@ -1,7 +1,7 @@
 import re
-from pathlib import Path
 
-KNOWLEDGE_FILE = Path(__file__).resolve().parent.parent / "knowledge" / "faq.md"
+from .business_settings import get_business_settings
+
 STOP_WORDS = {
     "a", "an", "and", "are", "as", "at", "be", "by", "can", "do", "for",
     "from", "how", "i", "in", "is", "it", "me", "my", "of", "on", "or",
@@ -15,9 +15,7 @@ def _tokens(text: str) -> set[str]:
 
 
 def load_sections() -> list[dict[str, str]]:
-    if not KNOWLEDGE_FILE.exists():
-        return []
-    text = KNOWLEDGE_FILE.read_text(encoding="utf-8")
+    text = get_business_settings().get("policies", "")
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
     headings = list(re.finditer(r"(?m)^##\s+(.+?)\s*$", text))
     sections = []
